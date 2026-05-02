@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#061226" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>McB · Ponte en forma para ti</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="assets/icon-192.png" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="installBar" class="install-bar hidden">
+    <span>Instala MCB en tu móvil</span><button id="installBtn">Instalar</button>
+  </div>
+
+  <div id="nameModal" class="name-modal hidden" role="dialog" aria-modal="true" aria-labelledby="nameModalTitle">
+    <div class="name-card">
+      <img src="assets/logo-premium.png" alt="MCB" class="name-logo" />
+      <p class="eyebrow gold">Antes de empezar</p>
+      <h2 id="nameModalTitle">Haz que este reto sea tuyo</h2>
+      <p>Escribe tu nombre una sola vez. La app lo usará en tu bienvenida, tu progreso y tu certificado final.</p>
+      <input id="userNameInput" type="text" placeholder="Tu nombre completo" autocomplete="name" />
+      <button id="saveUserNameBtn">Comenzar mi reto</button>
+      <p class="name-note">Podrás cambiarlo después desde la pantalla de inicio o desde el certificado.</p>
+    </div>
+  </div>
+
+  <header class="hero">
+    <img class="hero-logo main-brand" src="assets/logo-premium.png" alt="Logo MCB" />
+    <p class="eyebrow gold">Reto 28 días</p>
+    <h1>McB · Ponte en forma para ti</h1>
+    <p class="hero-text">Fuerza, pérdida de grasa y constancia para mujeres reales: +50, jóvenes o cualquier persona que quiera empezar con cabeza. Un método para cuidarte, cumplir y volver a sentirte bien en tu cuerpo.</p>
+    <div class="today-card">
+      <div><span>Hoy</span><strong id="todayLabel">Día 1</strong></div>
+      <div><span>Racha</span><strong><b id="streakCount">0</b> días</strong></div>
+      <div><span>Progreso</span><strong><b id="progressPercent">0</b>%</strong></div>
+    </div>
+    <div class="progress-shell"><div id="progressBar" class="progress-bar"></div></div>
+  </header>
+
+  <nav class="tabs" aria-label="Secciones">
+    <button class="tab active" data-section="inicio">Inicio</button>
+    <button class="tab" data-section="hoy">Hoy</button>
+    <button class="tab" data-section="rutina">Rutina silla</button>
+    <button class="tab" data-section="desayunos">Desayunos</button>
+    <button class="tab" data-section="alimentacion">Alimentación</button>
+    <button class="tab" data-section="comidas">Comidas</button>
+    <button class="tab" data-section="contador">Cuenta atrás</button>
+    <button class="tab" data-section="certificado">Certificado</button>
+    <button class="tab" data-section="logro">Final</button>
+    <button class="tab" data-section="emergencia">Emergencia</button>
+  </nav>
+
+  <main>
+    <section id="inicio" class="section active-section">
+      <article class="card luxe intro-card">
+        <img src="assets/logo-premium.png" class="mini-logo" alt="MCB" />
+        <p class="eyebrow">Objetivo</p>
+        <h2><span id="welcomeName">Hoy</span>, que te mires al espejo y digas: lo hice.</h2>
+        <p>No estamos jugando a empezar. Entrenas, comes con intención, marcas tu progreso y no rompes la cadena.</p>
+        <div class="home-actions">
+          <button class="secondary small-action" id="editNameBtn">Cambiar nombre</button>
+          <button class="secondary small-action danger-action" id="resetProgramBtn">Reiniciar programa</button>
+        </div>
+      </article>
+      <div class="grid two">
+        <article class="card"><h3>Reglas del reto</h3><ul class="clean-list"><li>Proteína en cada comida.</li><li>4 entrenamientos semanales.</li><li>Movimiento diario adaptable.</li><li>Agua suficiente para tu ritmo.</li><li>Alimentación consciente, no dieta perfecta.</li></ul></article>
+        <article class="card"><h3>Frase del día</h3><p class="quote" id="dailyQuote">No necesito ganas. Necesito cumplir.</p><button class="secondary" id="newQuoteBtn">Otra frase</button></article>
+      </div>
+    </section>
+
+    <section id="hoy" class="section">
+      <article class="card luxe"><h2>Tu día de hoy</h2><p id="dayMission">Cumple lo básico. Lo básico repetido cambia el cuerpo.</p></article>
+      <div class="check-grid">
+        <label class="check-card"><input type="checkbox" data-habit="entreno" /> <span>Entrenamiento</span></label>
+        <label class="check-card"><input type="checkbox" data-habit="agua" /> <span>2L de agua</span></label>
+        <label class="check-card"><input type="checkbox" data-habit="pasos" /> <span>7.000+ pasos</span></label>
+        <label class="check-card"><input type="checkbox" data-habit="proteina" /> <span>Proteína completa</span></label>
+        <label class="check-card"><input type="checkbox" data-habit="desayuno" /> <span>Desayuno MCB</span></label>
+        <label class="check-card"><input type="checkbox" data-habit="alimentacion" /> <span>Alimentación consciente</span></label>
+        <label class="check-card"><input type="checkbox" data-habit="sueno" /> <span>Sueño cuidado</span></label>
+      </div>
+      <article class="card"><h3>Entrenamiento de hoy</h3><div id="workoutBox"></div></article>
+    </section>
+
+
+
+    <section id="rutina" class="section">
+      <article class="card mcb-routine-hero center">
+        <img src="assets/logo-premium.png" class="mini-logo" alt="MCB" />
+        <p class="eyebrow">Rutina MCB con silla</p>
+        <h2>Una silla. Tu cuerpo. Diez minutos para ti.</h2>
+        <p>Una rutina guiada, limpia y segura para hacer en casa. La silla no rebaja el trabajo: te da control, técnica y confianza.</p>
+      </article>
+
+
+      <article class="card mcb-commit-card">
+        <p class="eyebrow">Micro compromiso</p>
+        <h3>Hoy solo te pido 10 minutos.</h3>
+        <p>No busques ganas. Busca cumplir. Pulsa el compromiso y empieza desde el nivel que tu cuerpo pueda sostener hoy.</p>
+        <button id="routineCommitBtn" class="secondary">Acepto mis 10 minutos</button>
+        <p id="routineCommitMessage" class="routine-soft-note">Sin presión. Con dirección.</p>
+      </article>
+
+      <article class="card mcb-mood-card">
+        <p class="eyebrow">Antes de empezar</p>
+        <h3>¿Cómo te sientes hoy?</h3>
+        <div class="routine-mood-grid">
+          <button class="routine-mood" data-mood="baja">Sin energía <span>te recomiendo suave</span></button>
+          <button class="routine-mood" data-mood="normal">Normal <span>te recomiendo avance</span></button>
+          <button class="routine-mood" data-mood="fuerte">Con fuerza <span>te recomiendo reto</span></button>
+        </div>
+        <p id="routineMoodAdvice" class="mcb-advice">Elige cómo estás de verdad. Entrenar inteligente también es cuidarte.</p>
+        <p id="routineMoodSelected" class="routine-mood-selected">Toca tu estado y la app elegirá el nivel por ti.</p>
+      </article>
+
+      <article class="card mcb-progress-card">
+        <p class="eyebrow">Progreso real</p>
+        <h3>Tu cadena MCB</h3>
+        <div class="routine-stats-grid">
+          <div><span>Racha actual</span><strong id="routineCurrentStreak">0 días</strong></div>
+          <div><span>Mejor racha</span><strong id="routineBestStreak">0 días</strong></div>
+          <div><span>Rutinas hechas</span><strong id="routineTotalDone">0</strong></div>
+        </div>
+        <div class="routine-next-box">
+          <p id="routineNextMilestone">Estás a 7 días de tu primer desbloqueo.</p>
+          <div class="routine-milestones">
+            <span id="milestone7">7 días</span>
+            <span id="milestone14">14 días</span>
+            <span id="milestone28">28 días</span>
+          </div>
+        </div>
+      </article>
+      <article class="card mcb-level-card">
+        <p class="eyebrow">Elige tu intensidad</p>
+        <h3>¿Cómo quieres entrenar hoy?</h3>
+        <div class="routine-levels mcb-levels">
+          <button class="routine-level" data-level="suave">Empiezo suave <span>1 vuelta · 10-15 repeticiones</span></button>
+          <button class="routine-level" data-level="avance">Quiero avanzar <span>2 vueltas · 20-30 repeticiones</span></button>
+          <button class="routine-level" data-level="reto">Voy a por todo <span>3 vueltas · 50 repeticiones</span></button>
+        </div>
+        <p class="mcb-advice">Empieza donde puedas cumplir. Subir nivel antes de dominar la técnica no es valentía: es ruido.</p>
+      </article>
+
+      <article class="card routine-status-card mcb-status-card">
+        <div class="routine-topline">
+          <div><span>Nivel</span><strong id="routineLevelLabel">Sin elegir</strong></div>
+          <div><span>Vuelta</span><strong id="routineRoundLabel">0/0</strong></div>
+          <div><span>Ejercicio</span><strong id="routineStepLabel">0/5</strong></div>
+        </div>
+        <div class="progress-shell routine-progress-shell"><div id="routineProgressBar" class="progress-bar"></div></div>
+      </article>
+
+      <article class="card mcb-exercise-shell">
+        <div class="mcb-routine-card">
+          <div class="mcb-routine-visual">
+            <div class="mcb-visual-frame">
+              <img id="routineExerciseImage" class="routine-image hidden" src="" alt="Viñeta del ejercicio" />
+              <div id="routineEmptyVisual" class="mcb-empty-visual">
+                <span>MCB</span>
+                <strong>Rutina con silla</strong>
+                <small>elige nivel y comienza</small>
+              </div>
+            </div>
+            <a id="routineDetailLink" class="secondary mcb-detail-link hidden" href="#" target="_blank" rel="noopener">Ver viñeta completa</a>
+          </div>
+
+          <div class="mcb-routine-copy">
+            <p class="eyebrow" id="routineExerciseKicker">Rutina MCB</p>
+            <h2 id="routineExerciseTitle">Elige un nivel para empezar</h2>
+            <p id="routineExerciseText">Te guiaré ejercicio por ejercicio. Marca “Hecho” y la app avanzará contigo.</p>
+            <div id="routineChips" class="mcb-chip-row"></div>
+            <div class="mcb-instruction-grid">
+              <div><p class="mcb-mini-title">Cómo hacerlo</p><ol id="routineSteps" class="mcb-steps"></ol></div>
+              <div><p class="mcb-mini-title">En qué enfocarte</p><p id="routineCue" class="mcb-cue">Control, respiración y postura.</p><p id="routineMuscles" class="mcb-muscles"></p></div>
+            </div>
+            <p id="routineLiveProgress" class="routine-live-progress">Elige tu estado o tu nivel para empezar.</p>
+            <p id="routineFeedback" class="routine-feedback" aria-live="polite">Hoy solo tienes que cumplir el siguiente paso.</p>
+            <div class="routine-actions mcb-routine-actions">
+              <button id="routineStartBtn">Comenzar rutina</button>
+              <button id="routineDoneBtn" class="secondary hidden">Hecho</button>
+              <button id="routineResetBtn" class="secondary">Reiniciar</button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="card mcb-mini-library">
+        <p class="eyebrow">La serie completa</p>
+        <h3>5 ejercicios, una misma línea visual</h3>
+        <div class="mcb-library-grid">
+          <button class="mcb-library-item" data-library-step="0"><img src="assets/rutina/talones.jpg" alt="Subir y bajar talones"><span>Talones</span></button>
+          <button class="mcb-library-item" data-library-step="1"><img src="assets/rutina/sentarse-levantarse.jpg" alt="Sentarse y levantarse"><span>Sentarse</span></button>
+          <button class="mcb-library-item" data-library-step="2"><img src="assets/rutina/sumo.jpg" alt="Sentadillas sumo"><span>Sumo</span></button>
+          <button class="mcb-library-item" data-library-step="3"><img src="assets/rutina/escalador.jpg" alt="Escalador con apoyo"><span>Escalador</span></button>
+          <button class="mcb-library-item" data-library-step="4"><img src="assets/rutina/rodillas-frente.jpg" alt="Rodillas al frente"><span>Rodillas</span></button>
+        </div>
+      </article>
+
+      <article class="card routine-finish-card hidden" id="routineFinishCard">
+        <p class="eyebrow">Rutina completada</p>
+        <h3 id="routineFinishTitle">Has cumplido por ti.</h3>
+        <p id="routineFinishMessage">No fue perfecto. Fue hecho. Y eso es lo que cambia el cuerpo.</p>
+        <div class="routine-finish-actions">
+          <button id="routineSaveTrainingBtn">Guardar entrenamiento de hoy</button>
+          <button id="routineRepeatBtn" class="secondary">Repetir rutina</button>
+        </div>
+        <p class="routine-saved-note" id="routineSavedNote">Cuando guardes, se marcará automáticamente el hábito Entrenamiento en tu reto.</p>
+      </article>
+
+      <article class="card mcb-week-card">
+        <p class="eyebrow">Tu semana</p>
+        <h3>Calendario de constancia</h3>
+        <p>Una fila simple: día hecho, día ganado. No buscamos perfección, buscamos cadena.</p>
+        <div id="routineWeekCalendar" class="routine-week-calendar"></div>
+      </article>
+    </section>
+
+    <section id="desayunos" class="section">
+      <article class="card luxe center"><img src="assets/logo-premium.png" class="mini-logo" alt="MCB" /><p class="eyebrow">Desayunos MCB</p><h2>No quitamos tu café. Lo hacemos útil.</h2><p>Tu ritual se queda, pero con proteína y control de grasas para que apoye tu objetivo.</p></article>
+      <div class="grid two">
+        <article class="card breakfast"><div class="food-visual coffee"></div><h3>Café Funcional MCB</h3><p>Café + bebida de almendras + 1 scoop de proteína + 1 cucharadita C8 + canela/vainilla. Ghee opcional, poca cantidad.</p><p class="note">No lo mezcles hirviendo: templa primero para que la proteína no se corte.</p><button onclick="selectBreakfast('Café Funcional MCB')">Elegir hoy</button></article>
+        <article class="card breakfast"><div class="food-visual bowl"></div><h3>MCB Completo</h3><p>Café + chía hidratada con bebida de almendras, canela y vainilla + yogur griego/proteico.</p><p class="note">Ideal para días de más hambre o cuando necesitas más saciedad.</p><button onclick="selectBreakfast('MCB Completo')">Elegir hoy</button></article>
+      </div>
+      <article class="card selected-box"><h3>Tu elección de hoy</h3><p id="breakfastChoice">Aún no has elegido desayuno.</p></article>
+    </section>
+
+
+    <section id="alimentacion" class="section">
+      <article class="card nutrition-hero center">
+        <img src="assets/logo-premium.png" class="mini-logo alimentacion-logo" alt="MCB" />
+        <p class="eyebrow">Alimentación consciente</p>
+        <h2>No es una dieta. Es una base flexible para cumplir.</h2>
+        <p>Inspirada en una pauta profesional, pero adaptada a la vida real: sin obsesión por gramos, sin suplementos obligatorios y sin castigo si un día sale torcido.</p>
+      </article>
+
+      <article class="card nutrition-profile-card">
+        <p class="eyebrow">Primero, ajusta el enfoque</p>
+        <h3>¿Qué necesitas hoy?</h3>
+        <div class="nutrition-profile-grid">
+          <button class="nutrition-profile" data-profile="suave">Empiezo o retomo <span>más amable, ideal +50 o principiantes</span></button>
+          <button class="nutrition-profile" data-profile="activa">Estoy activa <span>base equilibrada para avanzar</span></button>
+          <button class="nutrition-profile" data-profile="joven">Soy joven / ritmo alto <span>más energía, sin descontrol</span></button>
+        </div>
+        <p id="nutritionProfileAdvice" class="nutrition-advice">Elige tu punto real. Comer mejor no es copiar una dieta: es sostenerla.</p>
+      </article>
+
+      <article class="card nutrition-method-card">
+        <p class="eyebrow">Cómo funciona</p>
+        <h3>3 comidas principales + 1 apoyo opcional</h3>
+        <div class="nutrition-guide-grid">
+          <div><strong>Proteína</strong><span>tamaño de tu mano</span></div>
+          <div><strong>Carbohidrato</strong><span>tamaño de tu puño</span></div>
+          <div><strong>Grasa saludable</strong><span>tamaño de tu pulgar</span></div>
+          <div><strong>Verduras</strong><span>medio plato siempre que puedas</span></div>
+        </div>
+        <p class="note">Los gramos quedan como referencia avanzada. Para la app usamos guía visual porque es más sostenible.</p>
+      </article>
+
+      <div class="grid two nutrition-options">
+        <article class="card nutrition-block"><p class="eyebrow">Desayunos</p><h3>Elige 1</h3><ul class="clean-list"><li>Pan o tortitas + pavo/jamón + fruta.</li><li>Yogur, kéfir o queso fresco batido + frutos rojos + frutos secos.</li><li>Café funcional MCB + apoyo proteico si lo necesitas.</li></ul><button onclick="selectNutritionChoice('desayuno','Desayuno consciente')">He elegido mi desayuno</button></article>
+        <article class="card nutrition-block"><p class="eyebrow">Comidas</p><h3>Elige 1</h3><ul class="clean-list"><li>Arroz o pasta + carne blanca/pescado + verduras.</li><li>Legumbres + proteína + vegetales.</li><li>Ensalada completa con pollo, atún o pescado.</li></ul><button onclick="selectNutritionChoice('comida','Comida equilibrada')">He elegido mi comida</button></article>
+        <article class="card nutrition-block"><p class="eyebrow">Cenas</p><h3>Elige 1</h3><ul class="clean-list"><li>Huevos + pavo + fruta.</li><li>Ensalada completa con proteína.</li><li>Carne o pescado + vegetales.</li></ul><button onclick="selectNutritionChoice('cena','Cena ligera')">He elegido mi cena</button></article>
+        <article class="card nutrition-block"><p class="eyebrow">Apoyo opcional</p><h3>Si tienes hambre real</h3><ul class="clean-list"><li>Yogur proteico o queso fresco batido.</li><li>Batido de proteína si ya lo usas y te sienta bien.</li><li>Frutos secos medidos, no a puñados.</li></ul><button onclick="markNutritionDay()">Hoy me he cuidado</button></article>
+      </div>
+
+      <article class="card nutrition-habits-card">
+        <p class="eyebrow">Hábitos que sí suman</p>
+        <h3>La parte que de verdad cambia el reto</h3>
+        <ul class="clean-list">
+          <li>Muévete a diario: empieza con 6.000–8.000 pasos si estás empezando; sube cuando tu cuerpo responda.</li>
+          <li>Hidrátate: entre 1,5 y 2,5 litros como base orientativa, ajustando a calor, actividad y necesidades personales.</li>
+          <li>Duerme 7–8 horas siempre que puedas.</li>
+          <li>Una comida libre a la semana no rompe nada. Lo que rompe el proceso es abandonar.</li>
+        </ul>
+        <div class="nutrition-status-box">
+          <strong>Estado de hoy</strong>
+          <p id="nutritionStatus">Aún no has marcado tu alimentación consciente.</p>
+        </div>
+      </article>
+
+      <article class="card nutrition-warning">
+        <h3>Importante</h3>
+        <p>Esta app no sustituye a una nutricionista, médico o tratamiento. Si hay embarazo, diabetes, medicación, TCA, patología renal, digestiva o cardiovascular, la pauta debe revisarla un profesional.</p>
+      </article>
+    </section>
+
+    <section id="comidas" class="section">
+      <article class="card luxe"><h2>Plan de comidas simple</h2><p>Ideas simples para combinar proteína, carbohidrato, verduras y grasas saludables sin vivir pendiente de una báscula de cocina.</p></article>
+      <div class="grid two">
+        <article class="card"><h3>Comida rápida</h3><p>Pollo/pavo/atún + arroz/patata/quinoa + verduras + aceite de oliva medido.</p></article>
+        <article class="card"><h3>Cena ligera</h3><p>Tortilla con claras, pescado, yogur proteico o ensalada grande con proteína real.</p></article>
+        <article class="card"><h3>Snacks</h3><p>Yogur griego, queso fresco batido, atún, huevos cocidos, batido con agua o requesón con frutos rojos.</p></article>
+        <article class="card"><h3>Regla de oro</h3><p>No piques “un poco de todo”. Elige snack proteico y cierras la cocina.</p></article>
+      </div>
+    </section>
+
+    <section id="contador" class="section">
+      <article class="card luxe center"><img src="assets/logo-premium.png" class="mini-logo" alt="MCB" /><p class="eyebrow">Cuenta atrás personal</p><h2>Tu motivo visible cada día.</h2><p>Boda, playa, evento, cumpleaños o simplemente “volver a mí”. Lo importante: fecha y foco.</p></article>
+      <article class="card form-card"><label>Nombre del objetivo<input id="eventName" type="text" placeholder="Ej: Boda, Playa, Mi vestido" /></label><label>Fecha<input id="eventDate" type="date" /></label><button id="saveEventBtn">Guardar cuenta atrás</button></article>
+      <article class="card countdown-card"><p class="eyebrow">Faltan</p><h2 id="countdownText">Configura tu objetivo</h2><p id="countdownMessage">Cuando lo ves cada día, dejas de negociar contigo.</p></article>
+    </section>
+
+    <section id="certificado" class="section">
+      <article class="card luxe center"><img src="assets/logo-premium.png" class="mini-logo" alt="MCB" /><p class="eyebrow">Certificado final</p><h2>Se desbloquea al completar el método.</h2><p>Necesitas 28 días válidos. Un día válido cuenta cuando marcas al menos 4 hábitos clave, incluyendo entrenamiento, movimiento, agua, proteína, desayuno o alimentación consciente.</p></article>
+      <article id="certificateGate" class="card warning"><h3>Certificado bloqueado</h3><p id="certificateStatus">Todavía no has completado los 28 días válidos.</p><button class="secondary" id="previewCertificateBtn">Ver prueba de diseño</button></article>
+      <article id="certificateControls" class="card form-card hidden"><label>Nombre para el certificado<input id="certificateName" type="text" placeholder="Tu nombre completo" /></label><p class="note">Este nombre se guarda para que el certificado salga personalizado. Nada de nombres fijos.</p><button id="generateCertificateBtn">Generar certificado</button><button id="downloadCertificateBtn" class="secondary hidden">Descargar PNG</button><button id="shareCertificateBtn" class="secondary hidden">Compartir</button><button id="printCertificateBtn" class="secondary hidden">Guardar como PDF</button></article>
+      <canvas id="certificateCanvas" width="1600" height="1131" class="certificate-canvas"></canvas>
+    </section>
+
+
+    <section id="logro" class="section">
+      <article class="card luxe center final-card">
+        <img src="assets/logo-premium.png" class="mini-logo" alt="MCB" />
+        <p class="eyebrow">Pantalla final</p>
+        <h2>Lo has conseguido.</h2>
+        <p>No fue suerte. Fue constancia, decisiones repetidas y volver a ti incluso en días flojos.</p>
+        <div class="achievement-ring"><span id="finalPercent">0%</span></div>
+        <p id="finalMessage" class="quote small-quote">Aún estás construyendo tu logro. Sigue.</p>
+        <button id="goCertificateBtn">Ir al certificado</button>
+      </article>
+      <div class="grid two">
+        <article class="card"><h3>Logros desbloqueables</h3><ul id="badgesList" class="clean-list"></ul></article>
+        <article class="card"><h3>Ranking personal</h3><p>No compites con nadie. Compites con tu versión que abandona.</p><p><strong id="personalRank">Nivel inicial</strong></p></article>
+      </div>
+    </section>
+
+    <section id="emergencia" class="section">
+      <article class="card luxe"><h2>Modo emergencia</h2><p>Un mal día no rompe el reto. Lo rompe rendirte.</p></article>
+      <div class="grid two"><article class="card"><h3>No tengo tiempo</h3><p>Haz 12 minutos: sentadillas, flexiones en pared, puente glúteo y plancha. Tres rondas.</p></article><article class="card"><h3>Comí mal</h3><p>No compenses con hambre. Vuelve a proteína + verduras en la siguiente comida.</p></article><article class="card"><h3>No tengo ganas</h3><p>Haz solo el calentamiento. Si después quieres parar, paras. Casi nunca pararás.</p></article><article class="card"><h3>Me veo igual</h3><p>Mide cintura, energía, sueño y constancia. El espejo va con retraso.</p></article></div>
+    </section>
+  </main>
+
+
+  <div id="exerciseGuideModal" class="exercise-guide-modal hidden" role="dialog" aria-modal="true" aria-labelledby="exerciseGuideTitle">
+    <div class="exercise-guide-card">
+      <button id="closeExerciseGuideBtn" class="exercise-guide-close" aria-label="Cerrar guía">×</button>
+      <h3 id="exerciseGuideTitle">Guía del ejercicio</h3>
+      <img id="exerciseGuideImage" src="" alt="Boceto explicativo del ejercicio" />
+    </div>
+  </div>
+
+  <footer><img src="assets/logo-premium.png" alt="MCB" /><p>McB · Ponte en forma para ti · No perfecto, cumplido.</p></footer>
+  <script src="app.js"></script>
+</body>
+</html>
